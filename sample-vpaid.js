@@ -1,7 +1,7 @@
 (function() {
     var adContainer, button;
 
-    function initAd() {
+    function initAd(width, height, viewMode, desiredBitrate, creativeData, environmentVars) {
         // Create the ad container
         adContainer = document.createElement("div");
         adContainer.style.position = "relative";
@@ -43,13 +43,33 @@
         console.log("Ad stopped");
     }
 
-    // Export VPAID functions
+    function skipAd() {
+        stopAd();
+    }
+
+    function resizeAd(width, height, viewMode) {
+        console.log("Ad resized");
+    }
+
+    function pauseAd() {
+        console.log("Ad paused");
+    }
+
+    function resumeAd() {
+        console.log("Ad resumed");
+    }
+
+    // Export the VPAID interface functions
     window.getVPAIDAd = function() {
         return {
+            handshakeVersion: function(version) { return "2.0"; },
             initAd: initAd,
             startAd: startAd,
             stopAd: stopAd,
-            skipAd: stopAd
+            skipAd: skipAd,
+            resizeAd: resizeAd,
+            pauseAd: pauseAd,
+            resumeAd: resumeAd
         };
     };
 })();
